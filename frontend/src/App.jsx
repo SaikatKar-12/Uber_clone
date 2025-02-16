@@ -8,6 +8,7 @@ import CaptainSignup from './pages/CaptainSignup';
 import Home from './pages/Home';
 import CaptainHome from './pages/CaptainHome';
 import Riding from './pages/Riding';
+import CaptainRiding from './pages/CaptainRiding';
 
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
@@ -26,6 +27,7 @@ function App() {
       <Route path="/home" element={<Home />} />
       <Route path="/captain-home" element={<CaptainHome />} />
       <Route path="/riding" element={<Riding />} />
+      <Route path="/captain-riding" element={<CaptainRiding />} />
     </Routes>
   );
 }
