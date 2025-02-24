@@ -66,11 +66,14 @@ router.get('/get-suggestions',
     MapController.getAutoCompleteSuggestions
 )
 
-router.post('/create',
+router.post('/rides/create',
     //authMiddleware.authUser,
     // body('pickup').isString().isLength({ min: 3 }).withMessage('Invalid pickup address'),
     // body('destination').isString().isLength({ min: 3 }).withMessage('Invalid destination address'),
     // body('vehicleType').isString().isIn([ 'auto', 'car', 'moto' ]).withMessage('Invalid vehicle type'),
     rideController.createRide
+)
+router.get('/rides/get-fare',
+    rideController.getFare
 )
 module.exports = router;
