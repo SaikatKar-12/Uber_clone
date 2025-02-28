@@ -184,18 +184,46 @@ const Home = () => {
     }
 
     async function createRide() {
-        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
-            pickup,
-            destination,
-            vehicleType
-        }, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No token found in localStorage');
+                return;
             }
-        })
-
-
+    
+            // Fetch user ID from isAutharised API
+            const authResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/isAuthenticated`, {
+                headers: {
+                   'x-access-token': token
+                }
+            });
+    
+            if (!authResponse.data.success) {
+                console.error('User not authorized');
+                return;
+            }
+    
+            const user_id = authResponse.data.data; // Adjust based on actual response structure
+            console.log(user_id);
+            // Create ride with userId
+            const rideResponse = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/rides/create`, {
+                pickup,
+                destination,
+                vehicleType,
+                user_id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+    
+            console.log('Ride created:', rideResponse.data);
+    
+        } catch (error) {
+            console.error('Error creating ride:', error);
+        }
     }
+    
 
     return (
         <div className='h-screen relative overflow-hidden'>
@@ -257,6 +285,7 @@ const Home = () => {
             </div>
             <div ref={vehiclePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
                 <VehiclePanel
+                    createRide={createRide}
                     selectVehicle={setVehicleType}
                     fare={fare} setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel} />
             </div>
