@@ -53,7 +53,7 @@ class CaptainService {
             if(!user) {
                 throw {error: 'No user with the corresponding token exists'};
             }
-            return user.id;
+            return user;
         } catch (error) {
             console.log("Something went wrong in the auth process");
             throw error;

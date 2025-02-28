@@ -33,7 +33,7 @@ class CaptainRepository {
     async getById(userId) {
         try {
             const user = await Captain.findByPk(userId, {
-                attributes: ['email', 'id']
+                attributes: ['email', 'id','firstname','lastname','v_color','v_plate','v_capacity','v_model'],
             });
             return user;
         } catch (error) {
