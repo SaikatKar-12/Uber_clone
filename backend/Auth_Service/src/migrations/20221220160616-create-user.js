@@ -24,6 +24,15 @@ module.exports = {
           len: [3, 300]
         }
       },
+      firstname: {
+        type: Sequelize.STRING,
+      },
+      lastname: {
+        type: Sequelize.STRING,
+      },
+      socketId: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

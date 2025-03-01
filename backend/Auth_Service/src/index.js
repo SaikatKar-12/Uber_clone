@@ -1,26 +1,29 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const http = require('http');
 
 const { PORT } = require('./config/serverConfig');
 const apiRoutes = require('./routes/index');
 const cors = require("cors");
 const db = require('./models/index');
+const { initializeSocket } = require('./socket');
 
 const app = express();
-app.use(cors());
-const prepareAndStartServer = () => {
+const server = http.createServer(app); // Create HTTP server
 
+app.use(cors());
+
+initializeSocket(server); // Pass the HTTP server instance
+
+const prepareAndStartServer = () => {
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(bodyParser.urlencoded({ extended: true }));
 
     app.use('/api', apiRoutes);
 
-    app.listen(PORT, async () => {
+    server.listen(PORT, async () => { // Start server using `server.listen`
         console.log(`Server Started on Port: ${PORT}`);
-        // if(process.env.DB_SYNC) {
-        //     db.sequelize.sync({alter: true});
-        // }
     });
-}   
+};
 
 prepareAndStartServer();

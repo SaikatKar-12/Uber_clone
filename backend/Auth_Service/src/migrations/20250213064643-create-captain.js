@@ -48,6 +48,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      socketId: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

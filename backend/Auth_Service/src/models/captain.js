@@ -55,6 +55,9 @@ module.exports = (sequelize, DataTypes) => {
     v_model:  {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    socketId: {
+      type: DataTypes.STRING,
     }
   }, {
     sequelize,

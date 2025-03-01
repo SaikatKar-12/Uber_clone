@@ -9,7 +9,9 @@ const create = async (req, res) => {
         //console.log(req.body.password)
         const response = await userService.create({
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            firstname:req.body.firstname,
+            lastname:req.body.lastname
         });
         return res.status(201).json({
             success: true,

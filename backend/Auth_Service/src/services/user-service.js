@@ -50,10 +50,11 @@ class UserService {
                 throw {error: 'Invalid token'}
             }
             const user = await this.userRepository.getById(response.id);
+            //console.log(user);
             if(!user) {
                 throw {error: 'No user with the corresponding token exists'};
             }
-            return user.id;
+            return user;
         } catch (error) {
             console.log("Something went wrong in the auth process");
             throw error;
