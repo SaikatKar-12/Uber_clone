@@ -1,6 +1,5 @@
 const socketIo = require('socket.io');
-const User = require('./models/index');
-const Captain = require('./models/index');
+const { User, Captain } = require('./models'); // Import specific models
 
 let io;
 
@@ -17,12 +16,23 @@ function initializeSocket(server) {
 
 
         socket.on('join', async (data) => {
+            console.log("Received join event data:", data); // Debugging log
+        
             const { userId, userType } = data;
-
-            if (userType === 'user') {
-                await User.findByIdAndUpdate(userId, { socketId: socket.id });
-            } else if (userType === 'captain') {
-                await Captain.findByIdAndUpdate(userId, { socketId: socket.id });
+        
+            if (!userId) {
+                console.error("Error: userId is undefined in join event.");
+                return;
+            }
+        
+            try {
+                if (userType === 'user') {
+                    await User.update({ socketId: socket.id }, { where: { id: userId } });
+                } else if (userType === 'captain') {
+                    await Captain.update({ socketId: socket.id }, { where: { id: userId } });
+                }
+            } catch (error) {
+                console.error("Error updating socket ID:", error);
             }
         });
 
